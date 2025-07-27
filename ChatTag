@@ -1,0 +1,80 @@
+--// UI Setup
+local plr = game:GetService("Players").LocalPlayer
+local gui = Instance.new("ScreenGui", plr:WaitForChild("PlayerGui"))
+gui.Name = "ChatTagUI"
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 300, 0, 160)
+frame.Position = UDim2.new(0.5, -150, 0.5, -80)
+frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Text = "Custom Chat Tag"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.SourceSansBold
+title.TextScaled = true
+
+local tagBox = Instance.new("TextBox", frame)
+tagBox.PlaceholderText = "Enter tag (e.g. Admin)"
+tagBox.Size = UDim2.new(1, -20, 0, 30)
+tagBox.Position = UDim2.new(0, 10, 0, 40)
+tagBox.Font = Enum.Font.SourceSans
+tagBox.TextSize = 18
+
+local colorBox = Instance.new("TextBox", frame)
+colorBox.PlaceholderText = "RGB Color (e.g. 255,0,0)"
+colorBox.Size = UDim2.new(1, -20, 0, 30)
+colorBox.Position = UDim2.new(0, 10, 0, 80)
+colorBox.Font = Enum.Font.SourceSans
+colorBox.TextSize = 18
+
+local applyBtn = Instance.new("TextButton", frame)
+applyBtn.Text = "Apply"
+applyBtn.Size = UDim2.new(1, -20, 0, 30)
+applyBtn.Position = UDim2.new(0, 10, 0, 120)
+applyBtn.Font = Enum.Font.SourceSansBold
+applyBtn.TextSize = 18
+
+--// Variables
+local tagText = "[USER]"
+local tagColor = Color3.fromRGB(255, 255, 255)
+
+--// Apply button logic
+applyBtn.MouseButton1Click:Connect(function()
+    tagText = tagBox.Text ~= "" and tagBox.Text or "[USER]"
+    local r, g, b = string.match(colorBox.Text, "(%d+),%s*(%d+),%s*(%d+)")
+    if r and g and b then
+        tagColor = Color3.fromRGB(tonumber(r), tonumber(g), tonumber(b))
+    end
+end)
+
+--// Hook chat remote to modify messages
+local mt = getrawmetatable(game)
+setreadonly(mt, false)
+
+local oldNamecall = mt.__namecall
+mt.__namecall = newcclosure(function(self, ...)
+    local args = {...}
+    local method = getnamecallmethod()
+
+    -- Detect chat message
+    if tostring(self):lower():find("saymessage") and method == "FireServer" then
+        local msg = args[1]
+        -- Prepend tag
+        args[1] = string.format("<font color=\"rgb(%d,%d,%d)\">[%s]</font> %s", tagColor.R*255, tagColor.G*255, tagColor.B*255, tagText, msg)
+        return oldNamecall(self, unpack(args))
+    end
+
+    return oldNamecall(self, ...)
+end)
+
+setreadonly(mt, true)
+
+--// Notify
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Chat Tag Enabled",
+    Text = "Your chat tag will now appear globally.",
+    Duration = 5
+})
